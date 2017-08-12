@@ -94,17 +94,17 @@
 
 
 
-<meta name="description" content="开启个人博客之旅">
+<meta name="description" content="contextConfigLocation               classpath:applicationContext.xml                  org.springframework.web.context.ContextLoaderListener   web.xml的配置中配置作用  启动一个WEB项目的时候,容器(如:Tomcat)会去读它的配置文件w">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello,World">
-<meta property="og:url" content="https://liyanggsn.github.io/2017/08/12/Hello-World-0/index.html">
+<meta property="og:title" content="第二篇">
+<meta property="og:url" content="https://liyanggsn.github.io/2017/08/12/第二篇/index.html">
 <meta property="og:site_name" content="小乐的博客">
-<meta property="og:description" content="开启个人博客之旅">
+<meta property="og:description" content="contextConfigLocation               classpath:applicationContext.xml                  org.springframework.web.context.ContextLoaderListener   web.xml的配置中配置作用  启动一个WEB项目的时候,容器(如:Tomcat)会去读它的配置文件w">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-08-12T10:22:29.788Z">
+<meta property="og:updated_time" content="2017-08-12T10:28:00.160Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello,World">
-<meta name="twitter:description" content="开启个人博客之旅">
+<meta name="twitter:title" content="第二篇">
+<meta name="twitter:description" content="contextConfigLocation               classpath:applicationContext.xml                  org.springframework.web.context.ContextLoaderListener   web.xml的配置中配置作用  启动一个WEB项目的时候,容器(如:Tomcat)会去读它的配置文件w">
 
 
 
@@ -133,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="https://liyanggsn.github.io/2017/08/12/Hello-World-0/"/>
+  <link rel="canonical" href="https://liyanggsn.github.io/2017/08/12/第二篇/"/>
 
 
 
 
 
-  <title>Hello,World | 小乐的博客</title>
+  <title>第二篇 | 小乐的博客</title>
   
 
 
@@ -276,7 +276,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://liyanggsn.github.io/2017/08/12/Hello-World-0/">
+    <link itemprop="mainEntityOfPage" href="https://liyanggsn.github.io/2017/08/12/第二篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Liyang">
@@ -293,7 +293,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello,World</h1>
+          <h1 class="post-title" itemprop="name headline">第二篇</h1>
         
 
         <div class="post-meta">
@@ -305,7 +305,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-12T09:51:42+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-12T18:17:24+08:00">
                 2017-08-12
               </time>
             
@@ -324,9 +324,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/08/12/Hello-World-0/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/12/第二篇/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/08/12/Hello-World-0/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/12/第二篇/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,7 +354,21 @@
       
 
       
-        <p>开启个人博客之旅</p>
+        <p><context-param><br>      <param-name>contextConfigLocation</param-name><br>      <param-value><br>         classpath<em>:applicationContext</em>.xml<br>      </param-value><br>   </context-param><br>   <listener><br>      <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class><br>   </listener><br>web.xml的配置中<context-param>配置作用</context-param></p>
+<ol>
+<li>启动一个WEB项目的时候,容器(如:Tomcat)会去读它的配置文件web.xml.读两个节点: <listener></listener> 和 <context-param></context-param><br>2.紧接着,容器创建一个ServletContext(上下文),这个WEB项目所有部分都将共享这个上下文.<br>3.容器将<context-param></context-param>转化为键值对,并交给ServletContext.<br>4.容器创建<listener></listener>中的类实例,即创建监听.<br>5.在监听中会有contextInitialized(ServletContextEvent args)初始化方法,在这个方法中获得ServletContext = ServletContextEvent.getServletContext();<a id="more"></a>
+context-param的值 = ServletContext.getInitParameter(“context-param的键”);<br>6.得到这个context-param的值之后,你就可以做一些操作了.注意,这个时候你的WEB项目还没有完全启动完成.这个动作会比所有的Servlet都要早.</li>
+</ol>
+<p>换句话说,这个时候,你对<context-param>中的键值做的操作,将在你的WEB项目完全启动之前被执行.<br>7.举例.你可能想在项目启动之前就打开数据库.</context-param></p>
+<p>那么这里就可以在<context-param>中设置数据库的连接方式,在监听类中初始化数据库的连接.<br>8.这个监听是自己写的一个类,除了初始化方法,它还有销毁方法.用于关闭应用前释放资源.比如说数据库连接的关闭.</context-param></p>
+<p>context-param和init-param区别</p>
+<p>web.xml里面可以定义两种参数：</p>
+<p>(1)application范围内的参数，存放在servletcontext中，在web.xml中配置如下：</p>
+<p><context-param><br>           <param-name>context/param</param-name><br>           <param-value>avalible during application</param-value><br></context-param><br>(2)servlet范围内的参数，只能在servlet的init()方法中取得，在web.xml中配置如下：</p>
+<p><servlet><br>    <servlet-name>MainServlet</servlet-name><br>    <servlet-class>com.wes.controller.MainServlet</servlet-class><br>    <init-param><br>      <param-name>param1</param-name><br>       <param-value>avalible in servlet init()</param-value><br>    </init-param><br>    <load-on-startup>0</load-on-startup><br></servlet><br>在servlet中可以通过代码分别取用：</p>
+<p>package com.wes.controller;<br>import javax.servlet.ServletException;</p>
+<p>import javax.servlet.http.HttpServlet;<br>public class MainServlet extends HttpServlet …{<br>    public MainServlet() …{<br>        super();<br>     }<br>    public void init() throws ServletException …{<br>        System.out.println(“下面的两个参数param1是在servlet中存放的”);<br>         System.out.println(this.getInitParameter(“param1”));<br>         System.out.println(“下面的参数是存放在servletcontext中的”);<br>        System.out.println(getServletContext().getInitParameter(“context/param”));<br>      }<br>}<br>第一种参数在servlet里面可以通过getServletContext().getInitParameter(“context/param”)得到<br>第二种参数只能在servlet的init()方法中通过this.getInitParameter(“param1”)取得.</p>
+<p>Handler Mapping 的作用： HandlerMapping的作用就是解析请求链接，然后根据请求链接找到执行这个请求的类（HandlerMapping所说的handler，也就是我们写的Controller或是Action）。</p>
 
       
     </div>
@@ -379,15 +393,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/08/12/Hello-World-0/" rel="next" title="Hello,World">
+                <i class="fa fa-chevron-left"></i> Hello,World
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/08/12/第二篇/" rel="prev" title="第二篇">
-                第二篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -634,9 +648,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://liyanggsn.github.io/2017/08/12/Hello-World-0/';
-          this.page.identifier = '2017/08/12/Hello-World-0/';
-          this.page.title = 'Hello,World';
+          this.page.url = 'https://liyanggsn.github.io/2017/08/12/第二篇/';
+          this.page.identifier = '2017/08/12/第二篇/';
+          this.page.title = '第二篇';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://小李.disqus.com/embed.js';
